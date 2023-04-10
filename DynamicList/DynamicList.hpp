@@ -1,6 +1,6 @@
 //Entrada y salida de datos
 #include <iostream>
-
+#include <exception>
 //Tiene una funcion move que permite trasladar los datos de un objeto. Sin necesidad de crear copias inecearias
 // #include <utility>
 
@@ -19,7 +19,10 @@ class DynamicList
     public:
         ~DynamicList();
 
-        DynamicList(T *list, int size);
+        
+        DynamicList(int size = 0);
+        
+        DynamicList(int size, T *list);
         
         DynamicList(T **listOfList, int rows, int cols);
         //Trow error if index off
@@ -42,10 +45,25 @@ class DynamicList
 };
 
 template <typename T>
-DynamicList<T>::DynamicList(T *list, int size) {
+DynamicList<T>::DynamicList( int size  ){
+    if ( size < 0) {
+         throw invalid_argument("The size must be greater than zero");
+    } else if ( size == 0 ) {
+        this->listOfList = nullptr;
+        this->list = nullptr;
+    } else {
+        this->list = new T[size];
+    }
+}
+
+template <typename T>
+DynamicList<T>::DynamicList( int size, T *list) {
     this->listOfList = nullptr;
-    this->list = list;
     this->size = size;
+    this->list = new T[size];
+    for ( unsigned int i = 0; i < size; i++ ) {
+        this->list[i] = list[i];
+    }
 }
 
 template <typename T>
