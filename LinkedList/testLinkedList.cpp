@@ -78,7 +78,7 @@ int main()
     listInt.print();
 
     //test 11, linkedlist in linkedlist
-    LinkedList<LinkedList<int>> ints;
+    // LinkedList<LinkedList<int>> ints;
     
 
 
