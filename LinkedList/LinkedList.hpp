@@ -24,6 +24,8 @@ class LinkedList
 
         void append(int newElement );
 
+        void insert( int index, int newElement);
+
         void remove( int element );
 
         int pop( int index = -1 );
@@ -55,7 +57,8 @@ LinkedList::~LinkedList()
 }
 
 //LinkedList.at( index )
-//Return list element by position
+//Return list element by position.
+//a.at( -1 ) return last element of list
 int LinkedList::at( int index) const
 {
     if ( index >= m_size || index < -1 )
@@ -92,6 +95,49 @@ void LinkedList::append(int newElement )
     ++m_size;
 }
 
+//LinkedList.insert( index, x )
+//Insert an item at a given position.
+//The first argument is the index of the element before which to insert, so a.insert(0, x) inserts at the front of the list.
+//a.insert(len(a), x) or a.insert(len(a) + n, x) or a.insert( -1, x) is equivalent to a.append(x).
+void LinkedList::insert( int index, int newElement)
+{
+    if( index < -1 )
+    {
+        throw std::runtime_error("index out of range");
+    } 
+    else if( index == -1 )
+    {
+        index = m_size;
+    }
+
+    ListNode *newNode = new ListNode(newElement);
+    int i = 0;
+    ListNode *node = m_head->nextNode();
+    ListNode *prev = m_head;
+    
+    while( node != nullptr && i < index && i < m_size)
+    {
+        ++i;
+        prev = node;
+        node = node->nextNode();
+    }
+
+    if( prev != nullptr )
+    {
+        prev->setNextNode( newNode );
+
+        if( node != nullptr )
+        {
+            newNode->setNextNode( node );
+        }
+        else 
+        {
+            m_current = newNode;
+        }
+        ++m_size;
+    }
+}
+
 //LinkedList.remove( x )
 //Remove the first item from the list whose value is equal to x.
 void LinkedList::remove( int element )
@@ -121,7 +167,8 @@ void LinkedList::remove( int element )
 }
 
 //LinkedList.pop()
-//Remove the item at the given position in the list, and return it. If no index is specified, a.pop() removes and returns the last item in the list.
+//Remove the item at the given position in the list, and return it. 
+//If no index is specified, a.pop() or a.pop(-1) removes and returns the last item in the list.
 int LinkedList::pop( int index)
 {
 
@@ -168,6 +215,8 @@ int LinkedList::pop( int index)
         // return -1;
     }
 }
+
+
 
 //LinkedList.count( x )
 //Return the number of times x appears in the list.

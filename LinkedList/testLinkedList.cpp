@@ -53,5 +53,18 @@ int main()
     list.append(44);
     list.print();
 
+    //test 9, insert
+    list.insert( 0, 74);
+    list.print();
+
+    list.insert( 8995, 333);
+    list.print();
+
+    list.append(74);
+    list.print();
+
+    list.insert( 1, 66);
+    list.print();
+
     return 0;
 }
