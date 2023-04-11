@@ -5,7 +5,7 @@ using namespace std;
 
 int main()
 {
-    LinkedList list;
+    LinkedList<float> list;
 
     //test 1
     cout << list.length() << endl;
@@ -22,7 +22,7 @@ int main()
 
     //test 3, append element
     list.append(5);
-    list.append(10);
+    list.append(10.56);
     list.append(7);
 
     //test 4, element at list
@@ -37,7 +37,6 @@ int main()
     {
         list.append(i);
     }
-
     list.print();
 
     list.pop(1);
@@ -49,7 +48,7 @@ int main()
 
     //test 8, remove last element with element and append new elemnt
     list.remove(18);
-    list.append(22);
+    list.append(22.44);
     list.append(44);
     list.print();
 
@@ -65,6 +64,30 @@ int main()
 
     list.insert( 1, 66);
     list.print();
+
+    //test 10, no conflicts between instances,
+    LinkedList<int> listInt;
+    listInt.append(2);
+    listInt.append(-3);
+    listInt.append(-25);
+    listInt.print();
+    list.print();
+    listInt.append(0);
+    list.append(23.45);
+    list.print();
+    listInt.print();
+
+
+    //Test #, strigns list does not work
+    // LinkedList<string> week;
+    // week.append("Monday");
+    // week.append("Thusday");
+    // week.append("Wenesday");
+    // week.append("Thurstday");
+    // week.append("Fryday");
+    // week.append("Saturday");
+    // week.append("Sunday");
+    // week.print();
 
     return 0;
 }

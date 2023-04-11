@@ -1,13 +1,14 @@
 #pragma once
 
+template <typename T> 
 class ListNode
 {
     private:
-        int m_value;
+        T m_value;
         ListNode *m_nextNode;
 
     public:
-        ListNode( int value );
+        ListNode( T value );
 
         ListNode( const ListNode &other ) = delete;
 
@@ -15,7 +16,7 @@ class ListNode
 
         ~ListNode();
 
-        int value() const;
+        T value() const;
 
         ListNode *nextNode() const;
 
@@ -23,14 +24,16 @@ class ListNode
 
 };
 
-ListNode::ListNode( int value )
+template <typename T> 
+ListNode<T>::ListNode( T value )
 {
     this->m_value = value;
     this->m_nextNode = nullptr;
 
 }
 
-ListNode::~ListNode()
+template <typename T> 
+ListNode<T>::ListNode::~ListNode()
 {
     if( m_nextNode != nullptr )
     {
@@ -39,17 +42,20 @@ ListNode::~ListNode()
     }
 }
 
-int ListNode::value() const
+template <typename T> 
+T ListNode<T>::ListNode::value() const
 {
     return m_value;
 }
 
-ListNode *ListNode::nextNode() const
+template <typename T> 
+ListNode<T> *ListNode<T>::nextNode() const
 {
     return m_nextNode;
 }
 
-void ListNode::setNextNode( ListNode *nextNode )
+template <typename T> 
+void ListNode<T>::setNextNode( ListNode *nextNode )
 {
     m_nextNode = nextNode;
 }

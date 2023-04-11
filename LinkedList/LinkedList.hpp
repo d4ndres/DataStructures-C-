@@ -2,13 +2,16 @@
 #include "ListNode.hpp"
 #include <stdexcept>
 #include <iostream>
+using namespace std;
 
 //This is a class inspired by Python lists
+
+template <typename T>
 class LinkedList
 {
     private:
-        ListNode *m_head;
-        ListNode *m_current;//Aunque sea el nodo actual. Siempre apuntara al ultimo nodo.
+        ListNode<T> *m_head;
+        ListNode<T> *m_current;//Aunque sea el nodo actual. Siempre apuntara al ultimo nodo.
         int m_size;
 
     public:
@@ -20,17 +23,17 @@ class LinkedList
 
         ~LinkedList();
 
-        int at( int index) const;
+        T at( int index) const;
 
-        void append(int newElement );
+        void append(T newElement );
 
-        void insert( int index, int newElement);
+        void insert( int index, T newElement);
 
-        void remove( int element );
+        void remove( T element );
 
-        int pop( int index = -1 );
+        T pop( int index = -1 );
 
-        int count( int element ) const;
+        int count( T element ) const;
 
         int length() const;
 
@@ -38,16 +41,17 @@ class LinkedList
 
 };
 
-
-LinkedList::LinkedList()
+template <typename T>
+LinkedList<T>::LinkedList()
 {
     //placeholder de donde inicia nuestra cabecera de la lista
-    this->m_head = new ListNode(0);
+    this->m_head = new ListNode<T>(0);
     this->m_size = 0;
     m_current = m_head;
 }
 
-LinkedList::~LinkedList()
+template <typename T>
+LinkedList<T>::~LinkedList()
 {
     if( m_head != nullptr )
     {
@@ -59,7 +63,8 @@ LinkedList::~LinkedList()
 //LinkedList.at( index )
 //Return list element by position.
 //a.at( -1 ) return last element of list
-int LinkedList::at( int index) const
+template <typename T>
+T LinkedList<T>::at( int index) const
 {
     if ( index >= m_size || index < -1 )
     {
@@ -71,7 +76,7 @@ int LinkedList::at( int index) const
     }
 
     int i = 0;
-    ListNode *node = m_head->nextNode();
+    ListNode<T> *node = m_head->nextNode();
     while( node != nullptr && i < index)
     {
         node = node->nextNode();
@@ -81,15 +86,17 @@ int LinkedList::at( int index) const
     {
         return node->value();
     }
-    return -1;
+    throw std::runtime_error("Contact me if this error occurs");
+    // return -1;
 
 }
 
 //LinkedList.append( x )
 //Add an item to the end of the list.
-void LinkedList::append(int newElement )
+template <typename T>
+void LinkedList<T>::append(T newElement )
 {
-    ListNode *newNode = new ListNode(newElement);
+    ListNode<T> *newNode = new ListNode<T>(newElement);
     m_current->setNextNode(newNode);
     m_current = newNode;
     ++m_size;
@@ -99,7 +106,8 @@ void LinkedList::append(int newElement )
 //Insert an item at a given position.
 //The first argument is the index of the element before which to insert, so a.insert(0, x) inserts at the front of the list.
 //a.insert(len(a), x) or a.insert(len(a) + n, x) or a.insert( -1, x) is equivalent to a.append(x).
-void LinkedList::insert( int index, int newElement)
+template <typename T>
+void LinkedList<T>::insert( int index, T newElement)
 {
     if( index < -1 )
     {
@@ -110,10 +118,10 @@ void LinkedList::insert( int index, int newElement)
         index = m_size;
     }
 
-    ListNode *newNode = new ListNode(newElement);
+    ListNode<T> *newNode = new ListNode<T>(newElement);
     int i = 0;
-    ListNode *node = m_head->nextNode();
-    ListNode *prev = m_head;
+    ListNode<T> *node = m_head->nextNode();
+    ListNode<T> *prev = m_head;
     
     while( node != nullptr && i < index && i < m_size)
     {
@@ -140,10 +148,11 @@ void LinkedList::insert( int index, int newElement)
 
 //LinkedList.remove( x )
 //Remove the first item from the list whose value is equal to x.
-void LinkedList::remove( int element )
+template <typename T>
+void LinkedList<T>::remove( T element )
 {
-    ListNode *node = m_head->nextNode();
-    ListNode *prev = m_head;
+    ListNode<T> *node = m_head->nextNode();
+    ListNode<T> *prev = m_head;
     while (node != nullptr && node->value() != element)
     {
         prev = node;//Guardamos el nodo previo al encontrado.
@@ -169,7 +178,8 @@ void LinkedList::remove( int element )
 //LinkedList.pop()
 //Remove the item at the given position in the list, and return it. 
 //If no index is specified, a.pop() or a.pop(-1) removes and returns the last item in the list.
-int LinkedList::pop( int index)
+template <typename T>
+T LinkedList<T>::pop( int index)
 {
 
     if( index >= m_size || index < -1 )
@@ -183,8 +193,8 @@ int LinkedList::pop( int index)
     } 
 
     int i = 0;
-    ListNode *node = m_head->nextNode();
-    ListNode *prev = m_head;
+    ListNode<T> *node = m_head->nextNode();
+    ListNode<T> *prev = m_head;
     while( node != nullptr && i < index )
     {
         ++i;
@@ -193,7 +203,7 @@ int LinkedList::pop( int index)
     }
     if ( node != nullptr )
     {
-        int item = node->value();
+        T item = node->value();
 
         //Aca se borra el nodo de nuestra lista
         prev->setNextNode( node->nextNode() );
@@ -220,9 +230,10 @@ int LinkedList::pop( int index)
 
 //LinkedList.count( x )
 //Return the number of times x appears in the list.
-int LinkedList::count( int element ) const
+template <typename T>
+int LinkedList<T>::count( T element ) const
 {
-    ListNode *node = m_head->nextNode();
+    ListNode<T> *node = m_head->nextNode();
     int counter = 0;
 
     while( node != nullptr )
@@ -238,14 +249,16 @@ int LinkedList::count( int element ) const
 
 //LinkedList.length()
 //Return the length list
-int LinkedList::length() const
+template <typename T>
+int LinkedList<T>::length() const
 {
     return m_size;
 }
 
 //LinkedList.print()
 //Print the list
-void LinkedList::print() const 
+template <typename T>
+void LinkedList<T>::print() const 
 {
     for( int i = 0; i < m_size; i++)
     {
