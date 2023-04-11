@@ -77,6 +77,10 @@ int main()
     list.print();
     listInt.print();
 
+    //test 11, linkedlist in linkedlist
+    LinkedList<LinkedList<int>> ints;
+    
+
 
     //Test #, strigns list does not work
     // LinkedList<string> week;
