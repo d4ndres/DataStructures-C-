@@ -6,8 +6,12 @@ using namespace std;
 int main()
 {
     LinkedList list;
-    cout << list.size() << endl;
-    if( list.constains(23) )
+
+    //test 1
+    cout << list.length() << endl;
+
+    //test 2, constains number
+    if( list.count(23) )
     {
         cout << "List contains 23" << endl;
     }
@@ -15,24 +19,39 @@ int main()
     {
         cout << "List does not contains 23" << endl;
     }
-    list.add(5);
-    list.add(10);
-    list.add(7);
 
-    
-    for( int i = 0; i < list.size(); i++)
+    //test 3, append element
+    list.append(5);
+    list.append(10);
+    list.append(7);
+
+    //test 4, element at list
+    list.print();
+
+    //test 5, remove last element
+    list.pop();
+    list.print();
+
+    //test 6, remove element in index
+    for( int i = 0; i < 20; i += 2)
     {
-        cout << list.at(i) << " ";
+        list.append(i);
     }
-    cout << endl;
 
-    list.remove(120);
+    list.print();
 
-    for( int i = 0; i < list.size(); i++)
-    {
-        cout << list.at(i) << " ";
-    }
-    cout << endl;
+    list.pop(1);
+    list.print();
+
+    //test 7, remove element
+    list.remove(10);
+    list.print();
+
+    //test 8, remove last element with element and append new elemnt
+    list.remove(18);
+    list.append(22);
+    list.append(44);
+    list.print();
 
     return 0;
 }

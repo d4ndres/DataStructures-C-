@@ -1,12 +1,14 @@
 #pragma once
 #include "ListNode.hpp"
+#include <stdexcept>
+#include <iostream>
 
 class LinkedList
 {
     private:
         ListNode *m_head;
         ListNode *m_current;//Aunque sea el nodo actual. Siempre apuntara al ultimo nodo.
-        unsigned m_size;
+        int m_size;
 
     public:
         LinkedList();
@@ -19,15 +21,17 @@ class LinkedList
 
         int at( int index) const;
 
-        void add(int newElement );
+        void append(int newElement );
 
         void remove( int element );
 
-        void removeAt( int index);
+        int pop( int index = -1 );
 
-        bool constains( int element ) const;
+        int count( int element ) const;
 
-        unsigned size() const;
+        int length() const;
+
+        void print() const;
 
 };
 
@@ -50,10 +54,15 @@ LinkedList::~LinkedList()
 
 int LinkedList::at( int index) const
 {
-    if ( index >= m_size )
+    if ( index >= m_size || index < -1 )
     {
-        return -1; // throw error
+        throw std::runtime_error("index out of range");
     }
+    else if ( index == -1)
+    {
+        return m_current->value();
+    }
+
     int i = 0;
     ListNode *node = m_head->nextNode();
     while( node != nullptr && i < index)
@@ -69,7 +78,7 @@ int LinkedList::at( int index) const
 
 }
 
-void LinkedList::add(int newElement )
+void LinkedList::append(int newElement )
 {
     ListNode *newNode = new ListNode(newElement);
     m_current->setNextNode(newNode);
@@ -90,6 +99,11 @@ void LinkedList::remove( int element )
     if( node != nullptr)
     {
         prev->setNextNode(node->nextNode());
+        if( prev->nextNode() == nullptr )
+        {
+            m_current = prev;
+        }
+
         //Es necesario indicar que su siguiente nodo es nulo. de lo contrario al eliminarlo comienza una reaccion en cadena eliminando todo.
         node->setNextNode(nullptr);
         delete node;
@@ -98,12 +112,19 @@ void LinkedList::remove( int element )
     }
 }
 
-void LinkedList::removeAt( int index)
+int LinkedList::pop( int index)
 {
-    if( index <= m_size)
+
+    if( index >= m_size || index < -1 )
     {
-        return;
-    }
+        throw std::runtime_error("index out of range");
+        // return -1;
+    } 
+    else if ( index == -1 ) 
+    {
+        index = m_size - 1;
+    } 
+
     int i = 0;
     ListNode *node = m_head->nextNode();
     ListNode *prev = m_head;
@@ -115,31 +136,55 @@ void LinkedList::removeAt( int index)
     }
     if ( node != nullptr )
     {
+        int item = node->value();
+
         //Aca se borra el nodo de nuestra lista
         prev->setNextNode( node->nextNode() );
+        if( prev->nextNode() == nullptr )
+        {
+            m_current = prev;
+        }
 
         //Tambien cabe destacar que las suiguientes dos lineas son solo para limpiar memoria
         node->setNextNode( nullptr );
         delete node;
         --m_size;
+
+        return item;
+    }
+    else
+    {
+        throw std::runtime_error("Contact me if this error occurs");
+        // return -1;
     }
 }
 
-bool LinkedList::constains( int element ) const
+int LinkedList::count( int element ) const
 {
     ListNode *node = m_head->nextNode();
+    int counter = 0;
+
     while( node != nullptr )
     {
        if( node->value() == element )
        {
-        return true;
+            ++counter;
        }
        node = node->nextNode();
     }
-    return false;
+    return counter;
 }
 
-unsigned LinkedList::size() const
+int LinkedList::length() const
 {
     return m_size;
+}
+
+void LinkedList::print() const 
+{
+    for( int i = 0; i < m_size; i++)
+    {
+        std::cout << this->at(i) << " ";
+    }
+    std::cout << "\n";
 }
