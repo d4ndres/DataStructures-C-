@@ -3,6 +3,7 @@
 #include <stdexcept>
 #include <iostream>
 
+//This is a class inspired by Python lists
 class LinkedList
 {
     private:
@@ -35,6 +36,7 @@ class LinkedList
 
 };
 
+
 LinkedList::LinkedList()
 {
     //placeholder de donde inicia nuestra cabecera de la lista
@@ -52,6 +54,8 @@ LinkedList::~LinkedList()
     }
 }
 
+//LinkedList.at( index )
+//Return list element by position
 int LinkedList::at( int index) const
 {
     if ( index >= m_size || index < -1 )
@@ -78,6 +82,8 @@ int LinkedList::at( int index) const
 
 }
 
+//LinkedList.append( x )
+//Add an item to the end of the list.
 void LinkedList::append(int newElement )
 {
     ListNode *newNode = new ListNode(newElement);
@@ -86,6 +92,8 @@ void LinkedList::append(int newElement )
     ++m_size;
 }
 
+//LinkedList.remove( x )
+//Remove the first item from the list whose value is equal to x.
 void LinkedList::remove( int element )
 {
     ListNode *node = m_head->nextNode();
@@ -112,6 +120,8 @@ void LinkedList::remove( int element )
     }
 }
 
+//LinkedList.pop()
+//Remove the item at the given position in the list, and return it. If no index is specified, a.pop() removes and returns the last item in the list.
 int LinkedList::pop( int index)
 {
 
@@ -159,6 +169,8 @@ int LinkedList::pop( int index)
     }
 }
 
+//LinkedList.count( x )
+//Return the number of times x appears in the list.
 int LinkedList::count( int element ) const
 {
     ListNode *node = m_head->nextNode();
@@ -175,11 +187,15 @@ int LinkedList::count( int element ) const
     return counter;
 }
 
+//LinkedList.length()
+//Return the length list
 int LinkedList::length() const
 {
     return m_size;
 }
 
+//LinkedList.print()
+//Print the list
 void LinkedList::print() const 
 {
     for( int i = 0; i < m_size; i++)
