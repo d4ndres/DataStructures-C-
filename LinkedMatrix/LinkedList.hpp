@@ -40,7 +40,7 @@ class LinkedList
 
         int length() const;
 
-        void print() const;
+        void print( char _endl = '\t') const;
 
         void setNextList( LinkedList *nextList );
 
@@ -282,11 +282,11 @@ int LinkedList<T>::length() const
 //LinkedList.print()
 //Print the list
 template <typename T>
-void LinkedList<T>::print() const 
+void LinkedList<T>::print( char _endl) const 
 {
     for( int i = 0; i < m_size; i++)
     {
-        std::cout << this->at(i) << " ";
+        std::cout << this->at(i) << _endl;
     }
     std::cout << "\n";
 }

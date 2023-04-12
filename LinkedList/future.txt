@@ -1,0 +1,8 @@
+new methods that need
+
+earlyDelete     t
+remplace        t
+create          f
+fill            f
+max             f
+min             f
