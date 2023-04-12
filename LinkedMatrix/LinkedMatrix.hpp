@@ -3,6 +3,9 @@
 #include <iostream>
 #include "LinkedList.hpp"
 
+//it works. but works with a lot of memory and also does not clean the used memory.
+//And 
+
 template <typename T>
 class LinkedMatrix
 {
